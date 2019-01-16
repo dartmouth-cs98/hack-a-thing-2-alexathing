@@ -1,5 +1,5 @@
 // app/components/List.js
-import React, { Component } from 'react';
+import React, { Component, Alert } from 'react';
 import {
   View,
   Text,
@@ -45,9 +45,11 @@ class List extends Component {
             style={[
               styles.text,
               isCompleted
-                ? {
+                ? 
+                  {
                     color: itemListTextStrike,
                     textDecorationLine: 'line-through'
+                    
                   }
                 : { color: itemListText }
             ]}
@@ -64,6 +66,7 @@ class List extends Component {
                 color={deleteIconColor}
               />
             </TouchableOpacity>
+            
           </View>
         ) : null}
       </View>

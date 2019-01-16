@@ -1,5 +1,6 @@
 // app/Main.js
 import React from 'react';
+import { Button, Dimensions, Image, Alert } from 'react-native';
 import {
   StyleSheet,
   View,
@@ -15,6 +16,7 @@ import Header from './components/Header';
 import Input from './components/Input';
 import List from './components/List';
 const headerTitle = 'To Do';
+const { height, _width } = Dimensions.get('window');
 export default class Main extends React.Component {
   state = {
     inputValue: '',
@@ -30,6 +32,7 @@ export default class Main extends React.Component {
       inputValue: value
     });
   };
+  
   loadingItems = async () => {
     try {
       const allItems = await AsyncStorage.getItem('ToDos');
@@ -76,7 +79,9 @@ export default class Main extends React.Component {
         ...allItems
       };
       this.saveItems(newState.allItems);
+      Alert.alert('Keep it up!')
       return { ...newState };
+      
     });
   };
   completeItem = id => {
@@ -113,15 +118,17 @@ export default class Main extends React.Component {
   };
   deleteAllItems = async () => {
     try {
-      await AsyncStorage.removeItem('ToDos');
+      //await AsyncStorage.removeItem('ToDos');
       this.setState({ allItems: {} });
     } catch (err) {
       console.log(err);
     }
+    Alert.alert('Good Work! Time to Relax :)')
   };
   saveItems = newItem => {
     const saveItem = AsyncStorage.setItem('To Dos', JSON.stringify(newItem));
   };
+  
   render() {
     const { inputValue, loadingItems, allItems } = this.state;
     return (
@@ -130,6 +137,15 @@ export default class Main extends React.Component {
         <View style={styles.centered}>
           <Header title={headerTitle} />
         </View>
+         
+        
+        <Button
+          onPress={this.deleteAllItems}//, 
+                   //Alert.alert('You tapped the button!')}
+          title="Clear All"
+          color="#841584"
+          accessibilityLabel="Delete all items"
+        />
         <View style={styles.inputContainer}>
           <Input
             inputValue={inputValue}
@@ -160,6 +176,13 @@ export default class Main extends React.Component {
             <ActivityIndicator size="large" color="white" />
           )}
         </View>
+        <Image
+          
+          style={{width:_width, height: 200, flex: 1, zIndex: 0,
+  justifyContent: 'flex-end',
+  marginTop: 0}}
+          source={{uri: 'https://www.catster.com/wp-content/uploads/2015/06/20130405-unmotivational-cats-hero.jpg'}}
+        />
       </LinearGradient>
     );
   }
@@ -179,10 +202,12 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 70,
     paddingLeft: 15,
-    marginBottom: 10
+    marginBottom: 10,
+    zIndex:1
   },
   scrollableList: {
     marginTop: 15
+    
   },
   column: {
     flexDirection: 'row',

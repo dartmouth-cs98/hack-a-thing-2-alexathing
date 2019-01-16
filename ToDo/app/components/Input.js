@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     fontSize: 34,
     color: 'white',
-    fontWeight: '500'
+    fontWeight: '500',
+    zIndex: 1
   }
 });
 export default Input;
